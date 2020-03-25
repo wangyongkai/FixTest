@@ -28,6 +28,13 @@ public class MyApplication extends Application {
 
         //---------------------------------------------------------------------------------
 
+        //Tinker原理：
+        //下载patch包 在app内将patch包合并为全量包  然后将这个全量包插入到dexElements数组的最前面
+        //因为app安装目录是不能修改的  也就是应用启动后 还是会从安装目录读取之前的dex  所以只能插入dexElements前面
+        //每次启动都是这样 不是这次启动合并了  下次就会正常启动 还是会插入
+
+        //---------------------------------------------------------------------------------
+
         //必须在使用Test类之前修改dex
         String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "patch.dex";
         HotFix.inject(this, dexPath);
