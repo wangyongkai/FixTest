@@ -33,6 +33,8 @@ public class MyApplication extends Application {
         //因为app安装目录是不能修改的  也就是应用启动后 还是会从安装目录读取之前的dex  所以只能插入dexElements前面
         //每次启动都是这样 不是这次启动合并了  下次就会正常启动 还是会插入
 
+        //Tinker是全量包  能解决差分包不在同一个dex导致的CLASS_ISPREVERIFIED问题
+
         //---------------------------------------------------------------------------------
 
         //必须在使用Test类之前修改dex
