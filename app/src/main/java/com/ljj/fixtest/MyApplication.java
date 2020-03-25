@@ -37,6 +37,36 @@ public class MyApplication extends Application {
 
         //---------------------------------------------------------------------------------
 
+
+        //tinker更新so
+        //把SO的加载流程过完之后简单总结一下,想要做SO的补丁更新有两个方式,
+        // 一种是使用System.load方法接管SO加载入口,
+        // 另外一种是hook 插入补丁SO到ClassLoader中SO文件Element数组的前部.
+
+
+        //---------------------------------------------------------------------------------
+
+
+        //tinker更新资源
+        //应用启动还是启动base.apk 读取资源还是base.apk里的资源  所以要引导程序不要去读取base.apk里
+        // 的资源  而是读取fix.apk里的资源
+
+
+        //ActivityThread类的成员变量mActiveResources指向的是一个HashMap。
+        // 这个HashMap用来维护在当前应用程序进程中加载的每一个Apk文件及其对应的Resources对象的对应关系。
+        //在调用ActivityThread类的成员函数getTopLevelResources来获得一个Resources对象的时候，
+        // 需要指定要获取的Resources对象所对应的Apk文件路径，这个Apk文件路径就保存在LoadedApk类的成员变量mResDir中。
+        // 例如，假设我们要获取的Resources对象是用来访问系统自带的音乐播放器的资源的，那么对应的Apk文件路径就为/system/app/Music.apk。
+
+
+        //由上分析可知，ContextImpl创建过程中，会调研getResources()获得Resources对象，
+        // 而getResources最后调用getTopLevelResources方法。getTopLevelResources方法
+        // 首先从缓存中拿Resources对象，没有拿到则先创建AssetManager对象，
+        // 并通过AssetManager的addAssetPath实现系统资源文件、当前APK资源文件的加载，然后再创建Resources对象返回。
+
+
+        //---------------------------------------------------------------------------------
+
         //必须在使用Test类之前修改dex
         String dexPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "patch.dex";
         HotFix.inject(this, dexPath);
